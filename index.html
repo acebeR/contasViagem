@@ -1,58 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br" >
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contas de Viagem - Rateio de Despesas</title>
+  <title>Controle de Despesas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Contas de Viagem - Rateio de Despesas</h1>
+    <h1>Controle de Despesas</h1>
 
-    <section>
-      <h2>Pessoas</h2>
-      <label for="quantidade">Número de pessoas (1 a 10):</label>
-      <input type="number" id="quantidade" min="1" max="10" value="1" />
-      <button onclick="gerarCampos()">Gerar campos</button>
+    <div id="definirPessoas">
+      <label for="numPessoas">Número de pessoas (até 10):</label>
+      <input type="number" id="numPessoas" min="1" max="10" value="2" />
+      <button id="gerarCampos">Gerar campos</button>
+    </div>
 
-      <form id="form-nomes"></form>
+    <form id="camposNomes" style="display:none;">
+      <!-- Campos para nomes serão gerados aqui -->
+    </form>
 
-      <button onclick="salvarNomes()">Salvar nomes</button>
-    </section>
+    <form id="adicionarDespesa" style="display:none;">
+      <h2>Adicionar Despesa</h2>
 
-    <hr />
-
-    <section>
-      <h2>Adicionar despesa</h2>
       <label for="descricao">Descrição:</label>
-      <input type="text" id="descricao" placeholder="Ex: Passagens" />
+      <input type="text" id="descricao" placeholder="Ex: Passagem, Uber..." />
 
       <label for="pagador">Quem pagou:</label>
       <select id="pagador"></select>
 
-      <label>Quem participou (divide a despesa):</label>
+      <label>Participantes que dividiram a despesa:</label>
       <div id="participantes"></div>
 
       <label for="valor">Valor total (R$):</label>
-      <input type="number" id="valor" min="0.01" step="0.01" />
+      <input type="number" id="valor" min="0.01" step="0.01" placeholder="0.00" />
 
-      <button onclick="adicionarDespesa()">Adicionar despesa</button>
-    </section>
+      <button type="button" id="btnAdicionarDespesa">Adicionar despesa</button>
+    </form>
 
-    <hr />
-
-    <section>
-      <h2>Despesas</h2>
-      <ul id="lista-despesas"></ul>
-    </section>
-
-    <hr />
-
-    <section>
-      <h2>Resumo</h2>
-      <ul id="resumo"></ul>
-    </section>
+    <div id="resumo">
+      <!-- A tabela de dívidas vai aparecer aqui -->
+    </div>
   </div>
 
   <script src="script.js"></script>
