@@ -1,18 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" >
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contas de Viagem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contas de Viagem - Rateio de Despesas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Contas de Viagem</h1>
-    <ul id="lista-contas"></ul>
-    <input type="text" id="nova-conta" placeholder="Adicionar nova conta" />
-    <button onclick="adicionarConta()">Adicionar</button>
+    <h1>Contas de Viagem - Rateio de Despesas</h1>
+
+    <section>
+      <h2>Pessoas</h2>
+      <label for="quantidade">Número de pessoas (1 a 10):</label>
+      <input type="number" id="quantidade" min="1" max="10" value="1" />
+      <button onclick="gerarCampos()">Gerar campos</button>
+
+      <form id="form-nomes"></form>
+
+      <button onclick="salvarNomes()">Salvar nomes</button>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Adicionar despesa</h2>
+      <label for="descricao">Descrição:</label>
+      <input type="text" id="descricao" placeholder="Ex: Passagens" />
+
+      <label for="pagador">Quem pagou:</label>
+      <select id="pagador"></select>
+
+      <label>Quem participou (divide a despesa):</label>
+      <div id="participantes"></div>
+
+      <label for="valor">Valor total (R$):</label>
+      <input type="number" id="valor" min="0.01" step="0.01" />
+
+      <button onclick="adicionarDespesa()">Adicionar despesa</button>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Despesas</h2>
+      <ul id="lista-despesas"></ul>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Resumo</h2>
+      <ul id="resumo"></ul>
+    </section>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
