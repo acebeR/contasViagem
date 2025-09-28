@@ -1,18 +1,19 @@
 // Variáveis globais
 let pessoas = [];
 let despesas = [];
+let indexEditando = -1; // -1 = modo "adicionar"
 
-// Pega elementos do DOM
+// Elementos do DOM
 const numPessoasInput = document.getElementById('numPessoas');
 const gerarCamposBtn = document.getElementById('gerarCampos');
 const camposNomesForm = document.getElementById('camposNomes');
 const adicionarDespesaForm = document.getElementById('adicionarDespesa');
 const resumoDiv = document.getElementById('resumo');
+const listaDespesasDiv = document.getElementById('listaDespesas');
 const pagadorSelect = document.getElementById('pagador');
 const participantesDiv = document.getElementById('participantes');
 
-
-// Evento para gerar campos de nome
+// Geração dos campos de nomes
 gerarCamposBtn.addEventListener('click', () => {
   const num = parseInt(numPessoasInput.value);
   if (isNaN(num) || num < 1 || num > 10) {
@@ -20,21 +21,17 @@ gerarCamposBtn.addEventListener('click', () => {
     return;
   }
 
-  pessoas = []; // limpa lista
-  despesas = []; // limpa despesas também
-
-  camposNomesForm.style.display = 'block';
-  adicionarDespesaForm.style.display = 'none';
-  resumoDiv.innerHTML = '';
-
-  // Limpa campos anteriores
+  pessoas = [];
+  despesas = [];
   camposNomesForm.innerHTML = '';
+  resumoDiv.innerHTML = '';
+  listaDespesasDiv.innerHTML = '';
+  adicionarDespesaForm.style.display = 'none';
+  camposNomesForm.style.display = 'block';
 
-  // Gera inputs para nomes
   for (let i = 1; i <= num; i++) {
     const label = document.createElement('label');
     label.textContent = `Nome da pessoa ${i}:`;
-    label.htmlFor = `pessoa${i}`;
 
     const input = document.createElement('input');
     input.type = 'text';
@@ -47,7 +44,6 @@ gerarCamposBtn.addEventListener('click', () => {
     camposNomesForm.appendChild(input);
   }
 
-  // Botão salvar nomes
   const btnSalvar = document.createElement('button');
   btnSalvar.type = 'button';
   btnSalvar.id = 'salvarNomes';
@@ -70,35 +66,24 @@ gerarCamposBtn.addEventListener('click', () => {
 
     alert('Nomes salvos! Agora você pode adicionar despesas.');
 
-    // Mostra o formulário de adicionar despesas
     adicionarDespesaForm.style.display = 'block';
-
-    // Limpa campos do formulário de despesas
-    document.getElementById('descricao').value = '';
-    document.getElementById('valor').value = '';
-
-    atualizarPagadorParticipantes(pessoas);
+    atualizarPagadorParticipantes();
     mostrarTabelaDividas();
+    mostrarListaDespesas();
   });
 });
 
-
-// Atualiza select pagador e checkboxes participantes
-function atualizarPagadorParticipantes(pessoas) {
+function atualizarPagadorParticipantes() {
   pagadorSelect.innerHTML = '';
   participantesDiv.innerHTML = '';
 
   pessoas.forEach((nome, i) => {
-    // Select pagador
     const option = document.createElement('option');
     option.value = i;
     option.textContent = nome;
     pagadorSelect.appendChild(option);
 
-    // Checkbox participantes
     const label = document.createElement('label');
-    label.htmlFor = `part${i}`;
-
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = `part${i}`;
@@ -112,51 +97,46 @@ function atualizarPagadorParticipantes(pessoas) {
   });
 }
 
-
-// Evento adicionar despesa
+// Adicionar ou Editar despesa
 document.getElementById('btnAdicionarDespesa').addEventListener('click', () => {
   const descricao = document.getElementById('descricao').value.trim();
   const pagadorIdx = parseInt(pagadorSelect.value);
   const valor = parseFloat(document.getElementById('valor').value);
-  const participantesChecked = Array.from(participantesDiv.querySelectorAll('input[type=checkbox]:checked')).map(c => parseInt(c.value));
+  const participantesChecked = Array.from(participantesDiv.querySelectorAll('input[type=checkbox]:checked')).map(cb => parseInt(cb.value));
 
-  if (!descricao) {
-    alert('Digite uma descrição da despesa');
-    return;
-  }
-  if (isNaN(pagadorIdx) || pagadorIdx < 0) {
-    alert('Escolha quem pagou');
-    return;
-  }
-  if (isNaN(valor) || valor <= 0) {
-    alert('Digite um valor válido');
-    return;
-  }
-  if (participantesChecked.length === 0) {
-    alert('Selecione pelo menos um participante');
+  if (!descricao || isNaN(pagadorIdx) || isNaN(valor) || valor <= 0 || participantesChecked.length === 0) {
+    alert('Preencha todos os campos corretamente.');
     return;
   }
 
-  despesas.push({
+  const novaDespesa = {
     descricao,
     pagador: pagadorIdx,
     valor,
     participantes: participantesChecked,
-  });
+  };
+
+  if (indexEditando >= 0) {
+    despesas[indexEditando] = novaDespesa;
+    indexEditando = -1;
+    alert('Despesa editada com sucesso!');
+  } else {
+    despesas.push(novaDespesa);
+    alert('Despesa adicionada com sucesso!');
+  }
 
   localStorage.setItem('despesas', JSON.stringify(despesas));
-
-  alert('Despesa adicionada com sucesso!');
 
   // Limpa campos
   document.getElementById('descricao').value = '';
   document.getElementById('valor').value = '';
+  participantesDiv.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = true);
 
   mostrarTabelaDividas();
+  mostrarListaDespesas();
 });
 
-
-// Função que calcula as dívidas e mostra tabela
+// Mostrar tabela de dívidas
 function mostrarTabelaDividas() {
   if (pessoas.length === 0) {
     resumoDiv.innerHTML = '<p>Nenhuma pessoa cadastrada.</p>';
@@ -168,17 +148,8 @@ function mostrarTabelaDividas() {
     return;
   }
 
-  // Matriz para armazenar quanto cada pessoa deve para outra
-  // dividas[devedor][credor] = valor
-  const dividas = [];
-  for (let i = 0; i < pessoas.length; i++) {
-    dividas[i] = [];
-    for (let j = 0; j < pessoas.length; j++) {
-      dividas[i][j] = 0;
-    }
-  }
+  const dividas = Array.from({ length: pessoas.length }, () => Array(pessoas.length).fill(0));
 
-  // Calcula as dívidas com base nas despesas
   despesas.forEach(desp => {
     const valorPorPessoa = desp.valor / desp.participantes.length;
     desp.participantes.forEach(part => {
@@ -188,50 +159,87 @@ function mostrarTabelaDividas() {
     });
   });
 
-  // Monta a tabela HTML
   let html = '<table><thead><tr><th>Devedor \\ Credor</th>';
-  pessoas.forEach(nome => {
-    html += `<th>${nome}</th>`;
-  });
+  pessoas.forEach(nome => html += `<th>${nome}</th>`);
   html += '</tr></thead><tbody>';
 
   pessoas.forEach((nomeDevedor, i) => {
     html += `<tr><th>${nomeDevedor}</th>`;
-    pessoas.forEach((nomeCredor, j) => {
-      if (i === j) {
-        html += '<td style="background:#eee;">-</td>';
-      } else {
-        const valor = dividas[i][j];
-        html += `<td>${valor > 0 ? 'R$ ' + valor.toFixed(2) : '-'}</td>`;
-      }
+    pessoas.forEach((_, j) => {
+      html += `<td>${i === j ? '-' : (dividas[i][j] > 0 ? `R$ ${dividas[i][j].toFixed(2)}` : '-')}</td>`;
     });
     html += '</tr>';
   });
 
   html += '</tbody></table>';
-
   resumoDiv.innerHTML = html;
 }
 
+// Mostrar lista de despesas
+function mostrarListaDespesas() {
+  if (despesas.length === 0) {
+    listaDespesasDiv.innerHTML = '<p>Nenhuma despesa registrada.</p>';
+    return;
+  }
 
-// Ao carregar a página, tenta carregar dados do localStorage
+  let html = '<h2>Despesas</h2><ul>';
+  despesas.forEach((desp, index) => {
+    const participantesNomes = desp.participantes.map(i => pessoas[i]).join(', ');
+    html += `
+      <li>
+        <strong>${desp.descricao}</strong> - 
+        Pagador: ${pessoas[desp.pagador]}, 
+        Valor: R$ ${desp.valor.toFixed(2)}, 
+        Participantes: ${participantesNomes}
+        <button onclick="editarDespesa(${index})">Editar</button>
+        <button onclick="excluirDespesa(${index})">Excluir</button>
+      </li>
+    `;
+  });
+  html += '</ul>';
+
+  listaDespesasDiv.innerHTML = html;
+}
+
+// Editar despesa
+function editarDespesa(index) {
+  const desp = despesas[index];
+  document.getElementById('descricao').value = desp.descricao;
+  pagadorSelect.value = desp.pagador;
+  document.getElementById('valor').value = desp.valor;
+  participantesDiv.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.checked = desp.participantes.includes(parseInt(cb.value));
+  });
+
+  indexEditando = index;
+  window.scrollTo(0, 0);
+}
+
+// Excluir despesa
+function excluirDespesa(index) {
+  if (confirm('Deseja excluir esta despesa?')) {
+    despesas.splice(index, 1);
+    localStorage.setItem('despesas', JSON.stringify(despesas));
+    mostrarTabelaDividas();
+    mostrarListaDespesas();
+  }
+}
+
+// Carregar dados do localStorage ao iniciar
 window.addEventListener('load', () => {
   const pessoasSalvas = localStorage.getItem('pessoas');
   const despesasSalvas = localStorage.getItem('despesas');
 
   if (pessoasSalvas) {
     pessoas = JSON.parse(pessoasSalvas);
-    // Preenche camposNomes com os nomes (exibe os campos)
     numPessoasInput.value = pessoas.length;
+    camposNomesForm.innerHTML = '';
     camposNomesForm.style.display = 'block';
     adicionarDespesaForm.style.display = 'block';
 
-    // Gera os inputs com os nomes preenchidos
-    camposNomesForm.innerHTML = '';
     pessoas.forEach((nome, i) => {
       const label = document.createElement('label');
       label.textContent = `Nome da pessoa ${i + 1}:`;
-      label.htmlFor = `pessoa${i + 1}`;
 
       const input = document.createElement('input');
       input.type = 'text';
@@ -244,7 +252,6 @@ window.addEventListener('load', () => {
       camposNomesForm.appendChild(input);
     });
 
-    // Botão salvar nomes
     const btnSalvar = document.createElement('button');
     btnSalvar.type = 'button';
     btnSalvar.id = 'salvarNomes';
@@ -264,11 +271,12 @@ window.addEventListener('load', () => {
       pessoas = novosNomes;
       localStorage.setItem('pessoas', JSON.stringify(pessoas));
       alert('Nomes salvos!');
-      atualizarPagadorParticipantes(pessoas);
+      atualizarPagadorParticipantes();
       mostrarTabelaDividas();
+      mostrarListaDespesas();
     });
 
-    atualizarPagadorParticipantes(pessoas);
+    atualizarPagadorParticipantes();
   }
 
   if (despesasSalvas) {
@@ -276,4 +284,5 @@ window.addEventListener('load', () => {
   }
 
   mostrarTabelaDividas();
+  mostrarListaDespesas();
 });
