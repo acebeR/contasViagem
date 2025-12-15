@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="data:,">
 </head>
+
 <body>
   <div class="container">
     <h1>Controle de Despesas</h1>
@@ -23,9 +25,59 @@
       <div class="modal-content">
         <h2>Sobre este projeto</h2>
 
-        <label
-          id="descricaoProjeto"
-        >Neste Site você poderá cadastrar despesas relacionado a pessoas. O site calcula e retorna o que cada um deve a quem.</label>
+        <div id="descricaoProjeto" style="max-height: 500px; overflow-y: auto; padding: 10px; border: 1px solid #ccc;">
+          <p><strong>Nome do Projeto:</strong> Controle de Despesas</p>
+          <p><strong>Descrição Geral:</strong> O site é uma aplicação web que permite gerenciar despesas de forma simples e organizada. Ele foi desenvolvido para ajudar grupos de pessoas a controlar quem pagou o quê, calcular quanto cada participante deve para os demais e gerar relatórios claros de forma automatizada.</p>
+
+          <table border="1" cellpadding="6" cellspacing="0" style="width:100%; table-layout: fixed;">
+            <thead>
+              <tr>
+                <th>Principais Funcionalidades</th>
+                <th>Público-alvo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <ul>
+                    <li><strong>Cadastro de participantes:</strong> Inserir número de pessoas e cadastrar nomes.</li>
+                    <li><strong>Registro de despesas:</strong> Adicionar descrição, valor, pagador e participantes.</li>
+                    <li><strong>Edição e exclusão de despesas:</strong> Corrigir ou remover despesas.</li>
+                    <li><strong>Cálculo automático de dívidas:</strong> Calcula quanto cada participante deve ou recebe.</li>
+                    <li><strong>Resumo visual:</strong> Mostra tabela resumida de valores devidos.</li>
+                    <li><strong>Importação/exportação de dados:</strong> Baixar ou carregar informações em JSON.</li>
+                    <li><strong>Interface intuitiva:</strong> Layout simples e formulários claros.</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>Grupos de amigos ou familiares em viagens, festas ou eventos.</li>
+                    <li>Pequenos times de trabalho que dividem custos de projetos ou compras coletivas.</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table border="1" cellpadding="6" cellspacing="0" style="width:100%; table-layout: fixed; margin-top:10px;">
+            <thead>
+              <tr>
+                <th>Diferenciais</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <ul>
+                    <li>Front-end completo com armazenamento local (JSON), sem banco de dados complexo.</li>
+                    <li>Atualização dinâmica da tabela de despesas e dívidas sem recarregar a página.</li>
+                    <li>Edição intuitiva que mantém dados anteriores ao corrigir informações.</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="modal-actions">
           <button class="btn-secundario" id="fecharModalProjeto">Fechar</button>
@@ -76,6 +128,7 @@
 
   <script type="module" src="js/main.js?v=1"></script>
 
-  
+
 </body>
+
 </html>
