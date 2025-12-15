@@ -1,0 +1,35 @@
+{
+  "pessoas": [
+    "sdfsdf",
+    "sdfsdf"
+  ],
+  "despesas": [
+    {
+      "descricao": "rtyrtyrty",
+      "valor": 5000,
+      "pagador": 0,
+      "participantes": [
+        0,
+        1
+      ]
+    },
+    {
+      "descricao": "hgjghjj",
+      "valor": 800,
+      "pagador": 0,
+      "participantes": [
+        0,
+        1
+      ]
+    },
+    {
+      "descricao": "fgdrty",
+      "valor": 500,
+      "pagador": 0,
+      "participantes": [
+        0,
+        1
+      ]
+    }
+  ]
+}

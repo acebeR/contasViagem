@@ -310,5 +310,57 @@ body {
   color: white;
 }
 
+.despesa-item {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.texto-divida {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.acoes-despesa {
+  margin-top: 10px;
+}
+
+.acoes-despesa button {
+  margin-right: 8px;
+}
+
+.acoes-json {
+  margin-top: 20px;
+  text-align: right;
+}
+
+#btnBaixarJson {
+  background-color: #2d8f5a;
+}
+
+#btnBaixarJson:hover {
+  background-color: #247248;
+}
+
+.import-export {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-secundario {
+  background: #666;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+
+
 
   

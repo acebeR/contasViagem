@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Controle de Despesas</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:,">
 </head>
 <body>
   <div class="container">
@@ -65,9 +66,16 @@
 
     <div id="resumo"></div>
     <div id="listaDespesas"></div>
+    <div class="acoes-json">
+      <button id="btnBaixarJSON">Baixar JSON</button>
+      <input type="file" id="importarJSON" style="display:none;">
+      <button id="btnImportarJSON">Importar JSON</button>
+    </div>
+
   </div>
 
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js?v=1"></script>
+
   
 </body>
 </html>

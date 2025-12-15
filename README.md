@@ -1,8 +1,10 @@
 Para ver no servidor
 https://acebeR.github.io/contasViagem/
 Para ver no local
-1 - # Python 3.x
-python -m http.server 8000
+1 - cd C:\Users\stefanini\Documents\git\contasViagem
+2 - python rodar.py
 
-2 - http://localhost:8000
+
+
+http://localhost:3000 e http://localhost:8000
 
