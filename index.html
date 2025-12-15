@@ -10,43 +10,40 @@
   <div class="container">
     <h1>Controle de Despesas</h1>
 
-    <div id="definirPessoas">
+    <div>
       <label for="numPessoas">Número de pessoas (até 10):</label>
       <input type="number" id="numPessoas" min="1" max="10" value="2" />
       <button id="gerarCampos">Gerar campos</button>
     </div>
 
     <form id="camposNomes" style="display:none;">
-      <!-- Campos para nomes serão gerados aqui -->
+      <h2>Participantes</h2>
+      <!-- campos gerados via JS -->
     </form>
+
 
     <form id="adicionarDespesa" style="display:none;">
       <h2>Adicionar Despesa</h2>
 
-      <label for="descricao">Descrição:</label>
-      <input type="text" id="descricao" placeholder="Ex: Passagem, Uber..." />
+      <label>Descrição:</label>
+      <input type="text" id="descricao">
 
-      <label for="pagador">Quem pagou:</label>
+      <label>Quem pagou:</label>
       <select id="pagador"></select>
 
-      <label>Participantes que dividiram a despesa:</label>
+      <label>Participantes:</label>
       <div id="participantes"></div>
 
-      <label for="valor">Valor total (R$):</label>
-      <input type="number" id="valor" min="0.01" step="0.01" placeholder="0.00" />
+      <label>Valor:</label>
+      <input type="number" id="valor" step="0.01">
 
       <button type="button" id="btnAdicionarDespesa">Salvar despesa</button>
     </form>
 
-    <div id="resumo">
-      <!-- Tabela de dívidas -->
-    </div>
-
-    <div id="listaDespesas">
-      <!-- Lista com despesas adicionadas -->
-    </div>
+    <div id="resumo"></div>
+    <div id="listaDespesas"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

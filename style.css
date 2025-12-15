@@ -210,4 +210,26 @@ body {
   #listaDespesas button:hover {
     background-color: #444;
   }
+
+  /* padrão de campos (nomes, despesas, etc) */
+.campo-form {
+  margin-bottom: 15px;
+}
+
+.campo-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #555;
+}
+
+.campo-form input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
   
