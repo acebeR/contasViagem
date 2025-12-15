@@ -10,6 +10,29 @@
   <div class="container">
     <h1>Controle de Despesas</h1>
 
+    <div class="header">
+      <h1>Controle de Despesas</h1>
+
+      <button id="btnInfoProjeto" title="Sobre o projeto"><label class="label-pergunta">?</label></button>
+    </div>
+
+
+    <!-- MODAL -->
+    <div id="modalProjeto" class="modal hidden">
+      <div class="modal-content">
+        <h2>Sobre este projeto</h2>
+
+        <label
+          id="descricaoProjeto"
+        >Neste Site você poderá cadastrar despesas relacionado a pessoas. O site calcula e retorna o que cada um deve a quem.</label>
+
+        <div class="modal-actions">
+          <button class="btn-secundario" id="fecharModalProjeto">Fechar</button>
+        </div>
+      </div>
+    </div>
+
+
     <div>
       <label for="numPessoas">Número de pessoas (até 10):</label>
       <input type="number" id="numPessoas" min="1" max="10" value="2" />
@@ -45,5 +68,6 @@
   </div>
 
   <script type="module" src="js/main.js"></script>
+  
 </body>
 </html>
