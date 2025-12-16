@@ -1,5 +1,6 @@
-import json
+import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
+import json
 
 DB_FILE = "banco.json"
 
@@ -40,6 +41,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
             self.send_error(404, "File not found")
 
 if __name__ == "__main__":
-    server_address = ("", 3000)
-    print("🔹 Backend rodando em http://localhost:3000")
-    HTTPServer(server_address, SimpleHandler).serve_forever()
+    # Porta do backend
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 5000
+    print(f"🔹 Backend rodando em http://localhost:{port}")
+    HTTPServer(("", port), SimpleHandler).serve_forever()
