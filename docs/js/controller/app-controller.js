@@ -17,21 +17,7 @@ export async function iniciarApp() {
   await setDespesas([]);
   window.localStorage.clear();
   window.sessionStorage.clear();
-  // app-controller.js
-
-  try {
-    const res = await fetch('https://contasviagemrebeca.onrender.com'); // <- aqui
-    const data = await res.json();
-    if (data.pessoas) await setPessoas(data.pessoas);
-    if (data.despesas) await setDespesas(data.despesas);
-  } catch (err) {
-    console.warn('Não foi possível carregar dados do backend, usando localStorage:', err);
-    carregarPessoas();
-    carregarDespesas();
-  }
-
-
-
+  
 
   // Carregar dados
   carregarPessoas();

@@ -1,4 +1,4 @@
-import sys
+import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 
@@ -41,8 +41,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
             self.send_error(404, "File not found")
 
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))  # pega a porta do Render ou 5000 como fallback
+    port = int(os.environ.get("PORT", 5000))  # pega porta do Render
     print(f"🔹 Backend rodando em http://0.0.0.0:{port}")
     HTTPServer(("0.0.0.0", port), SimpleHandler).serve_forever()
 
