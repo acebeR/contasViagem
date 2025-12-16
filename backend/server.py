@@ -41,7 +41,7 @@ class SimpleHandler(BaseHTTPRequestHandler):
             self.send_error(404, "File not found")
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # pega porta do Render
+    port = int(os.environ.get("PORT", 5000))
     print(f"🔹 Backend rodando em http://0.0.0.0:{port}")
     HTTPServer(("0.0.0.0", port), SimpleHandler).serve_forever()
 
