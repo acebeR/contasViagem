@@ -2,18 +2,22 @@ import subprocess
 import os
 import sys
 
-print("🔹 Iniciando backend (Flask)...")
+# Porta do Render (ou 5000 como fallback local)
+backend_port = os.environ.get("PORT", "5000")
+frontend_port = "8000"  # Para testes locais, pode deixar fixo
+
+print(f"🔹 Iniciando backend (server.py) na porta {backend_port}...")
 subprocess.Popen(
-    [sys.executable, "server.py"],
+    [sys.executable, "server.py", backend_port],
     cwd=os.path.join(os.getcwd(), "backend")
 )
 
-print("🔹 Iniciando frontend...")
+print(f"🔹 Iniciando frontend na porta {frontend_port}...")
 subprocess.Popen(
-    [sys.executable, "-m", "http.server", "8000"],
+    [sys.executable, "-m", "http.server", frontend_port],
     cwd=os.path.join(os.getcwd(), "frontend")
 )
 
 print("\n✅ Acesse:")
-print("Frontend: http://localhost:8000")
-print("Backend:  http://localhost:5000/api/db")
+print(f"Frontend: http://localhost:{frontend_port}")
+print(f"Backend: http://localhost:{backend_port}/api/db")
