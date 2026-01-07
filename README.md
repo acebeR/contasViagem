@@ -23,5 +23,7 @@ Funcionalidade de edição intuitiva que permite corrigir informações sem perd
 
 <img width="1190" height="797" alt="image" src="https://github.com/user-attachments/assets/48b042ea-e7ba-44e9-9d32-ba13858ffd99" />
 
+Link da apresentação: https://youtu.be/uDwIYlQKYIk
+
 
 
